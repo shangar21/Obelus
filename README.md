@@ -1,3 +1,1 @@
 "# Obelus" 
-
-Description.
