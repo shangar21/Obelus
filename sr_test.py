@@ -30,6 +30,13 @@ def int_devide(text: str) -> int:
     return (x//y)
 
 
+
+def to_list(string: str) -> list:
+    arr2 = []
+    for i in string:
+        arr2.append(i)
+    return arr2
+
 r = sr.Recognizer()
 
 with sr.Microphone() as source:
@@ -39,10 +46,10 @@ with sr.Microphone() as source:
     try:
         text = r.recognize_google(audio)
         print(text)
-        print(int_subtraction(text))
-
+        print(int_addition(text))
     except:
         print("Sorry, unable to understand.")
+
 
 #print(int_multiply(text))
 
