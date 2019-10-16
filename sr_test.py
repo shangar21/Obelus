@@ -1,35 +1,6 @@
 
 import speech_recognition as sr
-
-def int_addition(text: str) -> int:
-    index = text.find("+")
-    x = int(text[:index - 1])
-    y = int(text[index + 2:])
-    return x + y
-
-
-def int_subtraction(text: str) -> int:
-    index = text.find("-")
-    x = int(text[:index - 1])
-    y = int(text[index + 2:])
-    return x - y
-
-
-
-def int_multiply(text: str) -> int:
-    index = text.find("*")
-    x = int(text[:index - 1])
-    y = int(text[index + 2:])
-    return x * y
-
-
-def int_devide(text: str) -> int:
-    index = text.find("\\")
-    x = int(text[:index - 1])
-    y = int(text[index + 2:])
-    return (x//y)
-
-
+import convert
 
 def to_list(string: str) -> list:
     arr2 = []
@@ -39,6 +10,7 @@ def to_list(string: str) -> list:
 
 r = sr.Recognizer()
 
+
 with sr.Microphone() as source:
     print("Say Something : ")
     audio = r.listen(source)
@@ -46,9 +18,13 @@ with sr.Microphone() as source:
     try:
         text = r.recognize_google(audio)
         print(text)
-        print(int_addition(text))
+        arr = text.split(" ")
+        print(*arr, sep=",")
+        arr = convert.order_of_operation(arr)
+        print(*arr)
     except:
         print("Sorry, unable to understand.")
+
 
 
 #print(int_multiply(text))
