@@ -17,9 +17,10 @@ with sr.Microphone() as source:
 
     try:
         text = r.recognize_google(audio)
+        text = convert.get_math_syntax(text)
         print(text)
         arr = text.split(" ")
-        print(*arr, sep=",")
+        #print(*arr, sep=",")
         arr = convert.order_of_operation(arr)
         print(*arr)
     except:
