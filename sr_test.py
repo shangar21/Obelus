@@ -1,4 +1,4 @@
-
+import math
 import speech_recognition as sr
 import convert
 
@@ -20,7 +20,7 @@ with sr.Microphone() as source:
         text = convert.get_math_syntax(text)
         print(text)
         arr = text.split(" ")
-        #print(*arr, sep=",")
+        print(*arr, sep=",")
         arr = convert.order_of_operation(arr)
         print(*arr)
     except:
