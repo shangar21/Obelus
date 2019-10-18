@@ -1,4 +1,3 @@
-import math
 import speech_recognition as sr
 import convert
 
@@ -21,7 +20,7 @@ with sr.Microphone() as source:
         print(text)
         arr = text.split(" ")
         print(*arr, sep=",")
-        arr = convert.order_of_operation(arr)
+        arr = convert.trigno(arr)
         print(*arr)
     except:
         print("Sorry, unable to understand.")

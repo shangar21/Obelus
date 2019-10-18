@@ -18,15 +18,6 @@ def fl_exp(eq: list, index: int) -> float:
 def int_factorial(eq: list, index: int) -> int:
     return math.factorial(int(eq[index -1]))
 
-def fl_sine(eq: list, index: int) -> float:
-    return math.sin(float(eq[index + 1]))
-
-def fl_cosine(eq: list, index: int) -> float:
-    return math.cos(float(eq[index + 1]))
-
-def fl_tangent(eq: list, index: int) -> float:
-    return math.tan(float(eq[index + 1]))
-
 def get_math_syntax (text: str) -> str:
     text = text.lower()
     text = text.replace("to the", "^")
@@ -38,16 +29,18 @@ def get_math_syntax (text: str) -> str:
     text = text.replace("factorial", "!")
     text = text.replace("times", "*")
     text = text.replace("sine of", "sine")
+    text = text.replace("sign", "sine")
+    text = text.replace("cosine", "cos")
+    text = text.replace("cosine of", "cos")
+    text = text.replace("tangent", "tan")
+    text = text.replace("tangent of", "tan")
+    text = text.replace("sine inverse", "arcsine")
+    text = text.replace("cos inverse", "arccos")
     return text
 
 def order_of_operation(eq: list) -> list:
     while len(eq) != 1:
-        if "sine" in eq:
-            x = fl_sine(eq, eq.index("sine"))
-            del eq[eq.index("sine") + 1]
-            eq.insert(eq.index("sine"), x)
-            del eq[eq.index("sine")]
-        elif "!" in eq:
+        if "!" in eq:
             x = int_factorial(eq, eq.index("!"))
             del eq[eq.index("!") - 1]
             eq.insert(eq.index("!"), x)
@@ -82,4 +75,25 @@ def order_of_operation(eq: list) -> list:
             del eq[eq.index("-") + 1]
             eq.insert(eq.index("-"), x)
             del eq[eq.index("-")]
+    return eq
+
+def trigno (eq: list):
+    if "sine" in eq:
+        arr = eq[eq.index("sine") + 1: ]
+        arr = order_of_operation(arr)
+        x = round(math.sin(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
+    elif "cos" in eq:
+        arr = eq[eq.index("sine") + 1: ]
+        arr = order_of_operation(arr)
+        x = round(math.cos(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
+    elif "tan" in eq:
+        arr = eq[eq.index("sine") + 1: ]
+        arr = order_of_operation(arr)
+        x = round(math.tan(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
     return eq
