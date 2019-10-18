@@ -18,6 +18,12 @@ def fl_exp(eq: list, index: int) -> float:
 def int_factorial(eq: list, index: int) -> int:
     return math.factorial(int(eq[index -1]))
 
+def replace_digits(eq: list) -> list:
+    for i in eq:
+        if i.isdigit():
+            eq[eq.index(i)] = float(i)
+    return eq
+
 def get_math_syntax (text: str) -> str:
     text = text.lower()
     text = text.replace("to the", "^")
@@ -34,7 +40,7 @@ def get_math_syntax (text: str) -> str:
     text = text.replace("cosine of", "cos")
     text = text.replace("tangent", "tan")
     text = text.replace("tangent of", "tan")
-    text = text.replace("sine inverse", "arcsine")
+    text = text.replace("sine inverse", "arcsin")
     text = text.replace("cos inverse", "arccos")
     return text
 
@@ -94,6 +100,24 @@ def trigno (eq: list):
         arr = eq[eq.index("sine") + 1: ]
         arr = order_of_operation(arr)
         x = round(math.tan(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
+    elif "arcsin" in eq:
+        arr = eq[eq.index("arcsin") + 1:]
+        arr = order_of_operation(arr)
+        x = round(math.asin(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
+    elif "arccos" in eq:
+        arr = eq[eq.index("arccos") + 1:]
+        arr = order_of_operation(arr)
+        x = round(math.acos(arr[0]), 8)
+        eq.clear()
+        eq.append(x)
+    elif "arctan" in eq:
+        arr = eq[eq.index("arctan") + 1: ]
+        arr = order_of_operation(arr)
+        x = round(math.atan(arr[0]), 8)
         eq.clear()
         eq.append(x)
     return eq

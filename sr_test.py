@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import convert
+import math
 
 def to_list(string: str) -> list:
     arr2 = []
@@ -20,6 +21,7 @@ with sr.Microphone() as source:
         print(text)
         arr = text.split(" ")
         print(*arr, sep=",")
+        arr = convert.replace_digits(arr)
         arr = convert.trigno(arr)
         print(*arr)
     except:
