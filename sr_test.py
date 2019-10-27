@@ -1,15 +1,7 @@
 import speech_recognition as sr
 import convert
-import math
-
-def to_list(string: str) -> list:
-    arr2 = []
-    for i in string:
-        arr2.append(i)
-    return arr2
 
 r = sr.Recognizer()
-
 
 with sr.Microphone() as source:
     print("Say Something : ")
@@ -20,9 +12,22 @@ with sr.Microphone() as source:
         text = convert.get_math_syntax(text)
         print(text)
         arr = text.split(" ")
+        #print(*arr, sep=",")
+        word = convert.seperate_cf(arr[5])
+        arr[5] = "x"
+        arr.insert(5, word)
         print(*arr, sep=",")
-        arr = convert.replace_digits(arr)
-        arr = convert.trigno(arr)
+        #arr = convert.replace_digits(arr)
+        arr = convert.quadratic(arr)
+        '''
+        if "log" in arr:
+            arr = convert.logarithm(arr)
+        elif "sine" in arr:
+            arr = convert.trigno(arr)
+        else:
+            arr = convert.order_of_operation(arr)
+        
+        '''
         print(*arr)
     except:
         print("Sorry, unable to understand.")

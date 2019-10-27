@@ -42,6 +42,9 @@ def get_math_syntax (text: str) -> str:
     text = text.replace("tangent of", "tan")
     text = text.replace("sine inverse", "arcsin")
     text = text.replace("cos inverse", "arccos")
+    text = text.replace("plus", "+")
+    text = text.replace("log of", "log")
+    text = text.replace("minus", "-")
     return text
 
 def order_of_operation(eq: list) -> list:
@@ -83,7 +86,7 @@ def order_of_operation(eq: list) -> list:
             del eq[eq.index("-")]
     return eq
 
-def trigno (eq: list):
+def trigno (eq: list) -> list:
     if "sine" in eq:
         arr = eq[eq.index("sine") + 1: ]
         arr = order_of_operation(arr)
@@ -121,3 +124,59 @@ def trigno (eq: list):
         eq.clear()
         eq.append(x)
     return eq
+
+def logarithm (eq: list) -> list:
+    if "/" in  eq:
+        if eq[eq.index("/") + 1] == "log":
+            arr1 = eq[eq.index("log") + 1: eq.index("/")]
+            arr1 = order_of_operation(arr1)
+            arr2 = eq[eq.index("/") + 2:]
+            arr2 = order_of_operation(arr2)
+            eq.clear()
+            eq.append(math.log(arr1[0],10)/math.log(arr2[0], 10))
+    else:
+        arr = eq[eq.index("log") + 1: ]
+        arr = order_of_operation(arr)
+        eq.clear()
+        eq.append(math.log(arr[0],10))
+    return eq
+
+def poly(eq: list) -> list:
+    powers = []
+    index_of_powers = []
+    coefficients = []
+
+    for i in len(eq):
+        if eq[i] == "-":
+            num = eq[i] + eq[i + 1]
+            eq[i] = "+"
+            eq.pop(i+1)
+            eq.insert(i + 1, num)
+
+
+    for i in range(len(eq)):
+        if i == "^":
+            index_of_powers.append(i)
+            powers.append(float(eq[i + 1]))
+            eq.pop(i)
+            eq.pop(i + 1)
+
+    degree = max(powers)
+
+
+
+
+
+
+
+
+    return [x1,x2]
+
+def seperate_cf(word: str) -> str:
+    num = ''
+    if len(word) == 1:
+        return word
+    for i in word:
+        if i.isdigit():
+            num += i
+    return num
