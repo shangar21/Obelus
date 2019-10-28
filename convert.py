@@ -146,7 +146,7 @@ def poly(eq: list) -> list:
     index_of_powers = []
     coefficients = []
 
-    for i in len(eq):
+    for i in range(len(eq)):
         if eq[i] == "-":
             num = eq[i] + eq[i + 1]
             eq[i] = "+"
