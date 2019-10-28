@@ -153,24 +153,20 @@ def poly(eq: list) -> list:
             eq.pop(i+1)
             eq.insert(i + 1, num)
 
-
     for i in range(len(eq)):
         if i == "^":
             index_of_powers.append(i)
             powers.append(float(eq[i + 1]))
-            eq.pop(i)
-            eq.pop(i + 1)
 
-    degree = max(powers)
+    temp = sorted(zip(powers, index_of_powers), key=lambda i: i[1])
 
+    for i,j in temp:
+        if j - 2 < 0:
+            coefficients.append(1)
+        coefficients.append(j - 2)
+        print(i, "+",j)
 
-
-
-
-
-
-
-    return [x1,x2]
+    return [0]
 
 def seperate_cf(word: str) -> str:
     num = ''

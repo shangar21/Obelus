@@ -18,7 +18,7 @@ with sr.Microphone() as source:
         arr.insert(5, word)
         print(*arr, sep=",")
         #arr = convert.replace_digits(arr)
-        arr = convert.quadratic(arr)
+        arr = convert.poly(arr)
         '''
         if "log" in arr:
             arr = convert.logarithm(arr)
