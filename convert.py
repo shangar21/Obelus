@@ -1,4 +1,5 @@
 import math
+import numpy
 
 def fl_addition (eq: list, index: int) -> float:
     return float(eq[index-1]) + float(eq[index+1])
@@ -143,7 +144,6 @@ def logarithm (eq: list) -> list:
 
 def poly(eq: list) -> list:
     powers = []
-    index_of_powers = []
     coefficients = []
 
     for i in range(len(eq)):
@@ -152,27 +152,30 @@ def poly(eq: list) -> list:
             eq[i] = "+"
             eq.pop(i+1)
             eq.insert(i + 1, num)
-
     for i in range(len(eq)):
-        if i == "^":
-            index_of_powers.append(i)
-            powers.append(float(eq[i + 1]))
+        if eq[i] == "^":
+            if i - 1 < 0 or not eq[i - 2].isdigit():
+                coefficients.append(1.0)
+            else:
+                powers.append(eq[i + 1])
+                coefficients.append(eq[i - 2])
+    eqn = zip(powers, coefficients)
+    eqn = sorted(eqn)
+    powers, coefficients = list(eqn)
+    eq = numpy.roots(coefficients)
+    eq = list(eq)
 
-    temp = sorted(zip(powers, index_of_powers), key=lambda i: i[1])
+    return eq
 
-    for i,j in temp:
-        if j - 2 < 0:
-            coefficients.append(1)
-        coefficients.append(j - 2)
-        print(i, "+",j)
-
-    return [0]
-
-def seperate_cf(word: str) -> str:
+def seperate_cf(eq: list):
     num = ''
-    if len(word) == 1:
-        return word
-    for i in word:
-        if i.isdigit():
-            num += i
-    return num
+    for i in eq:
+        if "x" in i:
+            for j in i:
+                if j.isdigit():
+                    num += j
+            eq[eq.index(i)] = "x"
+            eq.insert(eq.index(i), num)
+    for i in eq:
+        if i.isdigit:
+            eq[eq.index(i)] = float(i)

@@ -10,25 +10,10 @@ with sr.Microphone() as source:
     try:
         text = r.recognize_google(audio)
         text = convert.get_math_syntax(text)
-        print(text)
         arr = text.split(" ")
-        #print(*arr, sep=",")
-        word = convert.seperate_cf(arr[5])
-        arr[5] = "x"
-        arr.insert(5, word)
-        print(*arr, sep=",")
-        #arr = convert.replace_digits(arr)
-        arr = convert.poly(arr)
-        '''
-        if "log" in arr:
-            arr = convert.logarithm(arr)
-        elif "sine" in arr:
-            arr = convert.trigno(arr)
-        else:
-            arr = convert.order_of_operation(arr)
-        
-        '''
+        arr = convert.seperate_cf(arr)
         print(*arr)
+        print(*convert.poly(arr))
     except:
         print("Sorry, unable to understand.")
 
