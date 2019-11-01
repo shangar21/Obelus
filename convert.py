@@ -46,6 +46,7 @@ def get_math_syntax (text: str) -> str:
     text = text.replace("plus", "+")
     text = text.replace("log of", "log")
     text = text.replace("minus", "-")
+    text = text.replace("negative", "-")
     return text
 
 def order_of_operation(eq: list) -> list:
@@ -147,35 +148,71 @@ def poly(eq: list) -> list:
     coefficients = []
 
     for i in range(len(eq)):
-        if eq[i] == "-":
-            num = eq[i] + eq[i + 1]
-            eq[i] = "+"
-            eq.pop(i+1)
-            eq.insert(i + 1, num)
+        if eq[i] == "x":
+            if i + 1 < len(eq) and eq[i + 1] in ["+", "-"]:
+                eq.insert(i + 1, "1")
+                eq.insert(i + 1, "^")
+            elif i + 1 >= len(eq):
+                eq.append("^")
+                eq.append("1")
+
+
     for i in range(len(eq)):
         if eq[i] == "^":
-            if i - 1 < 0 or not eq[i - 2].isdigit():
-                coefficients.append(1.0)
+            powers.append(int(eq[i + 1]))
+
+
+    for i in range(max(powers) + 1):
+        if len(powers) == max(powers) + 1:
+            break
+        else:
+            powers.append(0)
+
+    for i in range(len(eq)):
+        if eq[i] == "x":
+            if i - 1 < 0 or eq[i - 1] in ["+", "-"]:
+                if eq[i - 1] == "-":
+                    coefficients.append(-1.0)
+                else:
+                    coefficients.append(1.0)
             else:
-                powers.append(eq[i + 1])
-                coefficients.append(eq[i - 2])
-    eqn = zip(powers, coefficients)
-    eqn = sorted(eqn)
-    powers, coefficients = list(eqn)
-    eq = numpy.roots(coefficients)
-    eq = list(eq)
+                if eq[i - 1] == "-":
+                    coefficients.append(float(eq[i - 1]) * -1)
+                else:
+                    coefficients.append(float(eq[i - 1]))
 
-    return eq
+    for i in range(len(eq)):
+        if eq[i].isdigit():
+            if i + 1 >= len(eq) and eq[i - 1] in ["+", "-"] or i - 1 <= 0 and eq[i + 1] in ["+", "-"]:
+                if eq[i - 1] == "-":
+                    coefficients.append(float(eq[i]) * -1)
+                else:
+                    coefficients.append(float(eq[i]))
+            elif eq[i - 1] in ["+", "-"] and eq[i + 1] in ["+", "-"]:
+                if eq[i - 1] == "-":
+                    coefficients.append(float(eq[i]) * -1)
+                else:
+                    coefficients.append(float(eq[i]))
 
-def seperate_cf(eq: list):
+    temp_list = zip(powers, coefficients)
+    temp_list = list(sorted(temp_list, reverse=True))
+
+    coefficients = []
+    for i in temp_list:
+        coefficients.append(i[1])
+
+    return list(numpy.roots(coefficients))
+
+
+
+def seperate_cf(eq: str):
     num = ''
     for i in eq:
-        if "x" in i:
-            for j in i:
-                if j.isdigit():
-                    num += j
-            eq[eq.index(i)] = "x"
-            eq.insert(eq.index(i), num)
-    for i in eq:
-        if i.isdigit:
-            eq[eq.index(i)] = float(i)
+        if i.isdigit() or i == "." :
+            num += str(i)
+    if num == '':
+        return None
+    return (num)
+    
+    
+    
