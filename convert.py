@@ -47,10 +47,14 @@ def get_math_syntax (text: str) -> str:
     text = text.replace("log of", "log")
     text = text.replace("minus", "-")
     text = text.replace("negative", "-")
+    text = text.replace("over", "/")
     return text
 
 def order_of_operation(eq: list) -> list:
     while len(eq) != 1:
+        if "pi" in eq:
+            eq.pop(eq.index("pi"))
+            eq.insert(eq.index("pi"), math.pi)
         if "!" in eq:
             x = int_factorial(eq, eq.index("!"))
             del eq[eq.index("!") - 1]
@@ -92,37 +96,39 @@ def trigno (eq: list) -> list:
     if "sine" in eq:
         arr = eq[eq.index("sine") + 1: ]
         arr = order_of_operation(arr)
-        x = round(math.sin(arr[0]), 8)
+        print(arr)
+        x = round(math.sin(float(arr[0])), 8)
+        print(x)
         eq.clear()
         eq.append(x)
     elif "cos" in eq:
         arr = eq[eq.index("sine") + 1: ]
         arr = order_of_operation(arr)
-        x = round(math.cos(arr[0]), 8)
+        x = round(math.cos(float(arr[0])), 8)
         eq.clear()
         eq.append(x)
     elif "tan" in eq:
         arr = eq[eq.index("sine") + 1: ]
         arr = order_of_operation(arr)
-        x = round(math.tan(arr[0]), 8)
+        x = round(math.tan(float(arr[0])), 8)
         eq.clear()
         eq.append(x)
     elif "arcsin" in eq:
         arr = eq[eq.index("arcsin") + 1:]
         arr = order_of_operation(arr)
-        x = round(math.asin(arr[0]), 8)
+        x = round(math.asin(float(arr[0])), 8)
         eq.clear()
         eq.append(x)
     elif "arccos" in eq:
         arr = eq[eq.index("arccos") + 1:]
         arr = order_of_operation(arr)
-        x = round(math.acos(arr[0]), 8)
+        x = round(math.acos(float(arr[0])), 8)
         eq.clear()
         eq.append(x)
     elif "arctan" in eq:
         arr = eq[eq.index("arctan") + 1: ]
         arr = order_of_operation(arr)
-        x = round(math.atan(arr[0]), 8)
+        x = round(math.atan(float(arr[0])), 8)
         eq.clear()
         eq.append(x)
     return eq
